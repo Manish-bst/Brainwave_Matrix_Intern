@@ -1,0 +1,13 @@
+{
+    "P0001": {
+        "name": "jonson baby soap",
+        "category": "soap",
+        "description": "Soap for kids.",
+        "price": 80.0,
+        "quantity": 2,
+        "threshold": 3,
+        "supplier": "jonsons",
+        "created_at": "2025-07-06 22:19:44",
+        "modified_at": "2025-07-06 22:24:16"
+    }
+}
