@@ -2044,6 +2044,13 @@ class InventoryApp:
                 
             except Exception as e:
                 messagebox.showerror("Error", f"Failed to delete user: {str(e)}")
+    def on_closing(self):
+        self.save_data(self.products_file,self.products)
+        self.save_data(self.users_file,self.users)
+        self.save_data(self.transactions_file,self.transactions)
+        if messagebox.askokcancel("Quit","Do you want to quit?"):
+            self.root.destroy()
+
 
 if __name__ == "__main__":
     root = tk.Tk()
