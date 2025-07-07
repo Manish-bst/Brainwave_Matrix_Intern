@@ -566,7 +566,6 @@ class InventoryApp:
             
             # Refresh products list
             self.refresh_products_list()
-            
             # Close dialog
             dialog.destroy()
             
