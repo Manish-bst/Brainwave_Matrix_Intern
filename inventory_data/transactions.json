@@ -1,0 +1,42 @@
+{
+    "T00001": {
+        "product_id": "P0001",
+        "action": "add",
+        "quantity": 20,
+        "user": "admin",
+        "timestamp": "2025-07-06 22:19:44",
+        "notes": "Product jonson baby soap added to inventory"
+    },
+    "T00002": {
+        "product_id": "P0001",
+        "action": "add",
+        "quantity": 5,
+        "user": "admin",
+        "timestamp": "2025-07-06 22:21:25",
+        "notes": "Stock added: must be sealed pack"
+    },
+    "T00003": {
+        "product_id": "P0001",
+        "action": "add",
+        "quantity": 5,
+        "user": "admin",
+        "timestamp": "2025-07-06 22:21:34",
+        "notes": "Stock added: must be sealed pack"
+    },
+    "T00004": {
+        "product_id": "P0001",
+        "action": "add",
+        "quantity": 2,
+        "user": "admin",
+        "timestamp": "2025-07-06 22:22:33",
+        "notes": "Stock added"
+    },
+    "T00005": {
+        "product_id": "P0001",
+        "action": "remove",
+        "quantity": 30,
+        "user": "admin",
+        "timestamp": "2025-07-06 22:24:16",
+        "notes": "Stock removed"
+    }
+}
