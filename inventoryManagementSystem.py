@@ -940,340 +940,333 @@ class InventoryApp:
         except Exception as e:
             messagebox.showerror("Error", f"Failed to generate report: {str(e)}")
 
-    def add_stock_dialog(self):
-        """Show dialog for adding stock to a product"""
-        dialog = tk.Toplevel(self.root)
-        dialog.title("Add Stock")
-        dialog.geometry("400x200")
-        dialog.resizable(False, False)
-        dialog.transient(self.root)
-        dialog.grab_set()
-        
-        # Form frame
-        form_frame = tk.Frame(dialog, bg=self.bg_color)
-        form_frame.pack(fill="both", expand=True, padx=20, pady=20)
-        
-        # Product selection
-        product_label = tk.Label(
-            form_frame,
-            text="Select Product:",
-            font=("Helvetica", 10),
-            bg=self.bg_color
-        )
-        product_label.grid(row=0, column=0, sticky="e", padx=5, pady=5)
-        
-        self.add_stock_product_var = tk.StringVar()
-        
-        product_names = sorted([(product_id, f"{product_id} - {product['name']}") 
-                              for product_id, product in self.products.items()], 
-                              key=lambda x: x[1])
-        
-        product_dropdown = ttk.Combobox(
-            form_frame,
-            textvariable=self.add_stock_product_var,
-            font=("Helvetica", 10),
-            values=[name[1] for name in product_names],
-            state="readonly",
-            width=30
-        )
-        product_dropdown.grid(row=0, column=1, sticky="w", padx=5, pady=5)
-        product_dropdown.current(0)
-        
-        # Quantity to add
-        quantity_label = tk.Label(
-            form_frame,
-            text="Quantity to Add:",
-            font=("Helvetica", 10),
-            bg=self.bg_color
-        )
-        quantity_label.grid(row=1, column=0, sticky="e", padx=5, pady=5)
-        
-        self.add_stock_quantity_var = tk.StringVar()
-        
-        quantity_entry = tk.Entry(
-            form_frame,
-            textvariable=self.add_stock_quantity_var,
-            font=("Helvetica", 10),
-            width=30
-        )
-        quantity_entry.grid(row=1, column=1, sticky="w", padx=5, pady=5)
-        
-        # Notes
-        notes_label = tk.Label(
-            form_frame,
-            text="Notes:",
-            font=("Helvetica", 10),
-            bg=self.bg_color
-        )
-        notes_label.grid(row=2, column=0, sticky="ne", padx=5, pady=5)
-        
-        self.add_stock_notes_var = tk.StringVar()
-        
-        notes_entry = tk.Entry(
-            form_frame,
-            textvariable=self.add_stock_notes_var,
-            font=("Helvetica", 10),
-            width=30
-        )
-        notes_entry.grid(row=2, column=1, sticky="w", padx=5, pady=5)
-        
-        # Button frame
-        button_frame = tk.Frame(form_frame, bg=self.bg_color)
-        button_frame.grid(row=3, column=0, columnspan=2, pady=(20, 0))
-        
-        add_button = tk.Button(
-            button_frame,
-            text="Add Stock",
-            font=("Helvetica", 10),
-            bg=self.secondary_color,
-            fg="white",
-            command=lambda: self.add_stock(dialog)
-        )
-        add_button.pack(side="left", padx=10)
-        
-        cancel_button = tk.Button(
-            button_frame,
-            text="Cancel",
-            font=("Helvetica", 10),
-            bg=self.accent_color,
-            fg="white",
-            command=dialog.destroy
-        )
-        cancel_button.pack(side="left", padx=10)
-        
-    def add_stock(self, dialog):
-        """Add stock to selected product"""
-        try:
-            product_str = self.add_stock_product_var.get()
-            product_id = product_str.split(" - ")[0]
-            quantity_str = self.add_stock_quantity_var.get().strip()
-            notes = self.add_stock_notes_var.get().strip()
-            
-            if not product_id or not quantity_str:
-                messagebox.showerror("Error", "Please select a product and enter quantity")
-                return
-                
-            try:
-                quantity = int(quantity_str)
-                if quantity <= 0:
-                    raise ValueError
-            except ValueError:
-                messagebox.showerror("Error", "Please enter a valid positive quantity")
-                return
-                
-            product = self.products[product_id]
-            product["quantity"] += quantity
-            product["modified_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            
-            # Record transaction
-            self.record_transaction(
-                product_id,
-                "add",
-                quantity,
-                f"Stock added: {notes}" if notes else "Stock added"
-            )
-            
-            # Save data
-            self.save_data(self.products_file, self.products)
-            
-            # Refresh products list if Products tab is active
-            self.refresh_products_list()
-            
-            # Update low stock report if Inventory tab is active
-            self.generate_low_stock_report()
-            
-            # Close dialog
-            dialog.destroy()
-            
-            messagebox.showinfo("Success", f"{quantity} units added to {product['name']}")
-            
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to add stock: {str(e)}")
+def add_stock_dialog(self):
+    """Show dialog for adding stock to a product"""
+    dialog = tk.Toplevel(self.root)
+    dialog.title("Add Stock")
+    dialog.geometry("400x200")
+    dialog.resizable(False, False)
+    dialog.transient(self.root)
+    dialog.grab_set()
+    
+    # Form frame
+    form_frame = tk.Frame(dialog, bg=self.bg_color)
+    form_frame.pack(fill="both", expand=True, padx=20, pady=20)
+    
+    # Product selection
+    product_label = tk.Label(
+        form_frame,
+        text="Select Product:",
+        font=("Helvetica", 10),
+        bg=self.bg_color
+    )
+    product_label.grid(row=0, column=0, sticky="e", padx=5, pady=5)
+    
+    self.add_stock_product_var = tk.StringVar()
+    
+    product_names = sorted([(product_id, f"{product_id} - {product['name']}") 
+                          for product_id, product in self.products.items()], 
+                          key=lambda x: x[1])
+    
+    product_dropdown = ttk.Combobox(
+        form_frame,
+        textvariable=self.add_stock_product_var,
+        font=("Helvetica", 10),
+        values=[name[1] for name in product_names],
+        state="readonly",
+        width=30
+    )
+    product_dropdown.grid(row=0, column=1, sticky="w", padx=5, pady=5)
+    product_dropdown.current(0)
+    
+    # Quantity to add
+    quantity_label = tk.Label(
+        form_frame,
+        text="Quantity to Add:",
+        font=("Helvetica", 10),
+        bg=self.bg_color
+    )
+    quantity_label.grid(row=1, column=0, sticky="e", padx=5, pady=5)
+    
+    self.add_stock_quantity_var = tk.StringVar()
+    
+    quantity_entry = tk.Entry(
+        form_frame,
+        textvariable=self.add_stock_quantity_var,
+        font=("Helvetica", 10),
+        width=30
+    )
+    quantity_entry.grid(row=1, column=1, sticky="w", padx=5, pady=5)
+    
+    # Notes
+    notes_label = tk.Label(
+        form_frame,
+        text="Notes:",
+        font=("Helvetica", 10),
+        bg=self.bg_color
+    )
+    notes_label.grid(row=2, column=0, sticky="ne", padx=5, pady=5)
+    
+    self.add_stock_notes_var = tk.StringVar()
+    
+    notes_entry = tk.Entry(
+        form_frame,
+        textvariable=self.add_stock_notes_var,
+        font=("Helvetica", 10),
+        width=30
+    )
+    notes_entry.grid(row=2, column=1, sticky="w", padx=5, pady=5)
+    
+    # Button frame
+    button_frame = tk.Frame(form_frame, bg=self.bg_color)
+    button_frame.grid(row=3, column=0, columnspan=2, pady=(20, 0))
+    
+    add_button = tk.Button(
+        button_frame,
+        text="Add Stock",
+        font=("Helvetica", 10),
+        bg=self.secondary_color,
+        fg="white",
+        command=lambda: self.add_stock(dialog)
+    )
+    add_button.pack(side="left", padx=10)
+    
+    cancel_button = tk.Button(
+        button_frame,
+        text="Cancel",
+        font=("Helvetica", 10),
+        bg=self.accent_color,
+        fg="white",
+        command=dialog.destroy
+    )
+    cancel_button.pack(side="left", padx=10)
 
-    def remove_stock_dialog(self):
-        """Show dialog for removing stock from a product"""
-        dialog = tk.Toplevel(self.root)
-        dialog.title("Remove Stock")
-        dialog.geometry("400x250")
-        dialog.resizable(False, False)
-        dialog.transient(self.root)
-        dialog.grab_set()
+
+def add_stock(self, dialog):
+    try:
+        product_str = self.add_stock_product_var.get()
+        if not product_str:
+            messagebox.showerror("Error", "Please select a product")
+            return
+        product_id = product_str.split(" - ")[0]
+        quantity_str = self.add_stock_quantity_var.get().strip()
+        notes = self.add_stock_notes_var.get().strip()
         
-        # Form frame
-        form_frame = tk.Frame(dialog, bg=self.bg_color)
-        form_frame.pack(fill="both", expand=True, padx=20, pady=20)
-        
-        # Product selection
-        product_label = tk.Label(
-            form_frame,
-            text="Select Product:",
-            font=("Helvetica", 10),
-            bg=self.bg_color
-        )
-        product_label.grid(row=0, column=0, sticky="e", padx=5, pady=5)
-        
-        self.remove_stock_product_var = tk.StringVar()
-        
-        product_names = sorted([(product_id, f"{product_id} - {product['name']}") 
-                              for product_id, product in self.products.items()], 
-                              key=lambda x: x[1])
-        
-        product_dropdown = ttk.Combobox(
-            form_frame,
-            textvariable=self.remove_stock_product_var,
-            font=("Helvetica", 10),
-            values=[name[1] for name in product_names],
-            state="readonly",
-            width=30
-        )
-        product_dropdown.grid(row=0, column=1, sticky="w", padx=5, pady=5)
-        product_dropdown.current(0)
-        
-        # Current quantity display (readonly)
-        current_label = tk.Label(
-            form_frame,
-            text="Current Quantity:",
-            font=("Helvetica", 10),
-            bg=self.bg_color
-        )
-        current_label.grid(row=1, column=0, sticky="e", padx=5, pady=5)
-        
-        self.current_quantity_var = tk.StringVar()
-        self.current_quantity_var.set(self.products[product_names[0][0]]["quantity"])
-        
-        current_entry = tk.Entry(
-            form_frame,
-            textvariable=self.current_quantity_var,
-            font=("Helvetica", 10),
-            state="readonly",
-            width=30
-        )
-        current_entry.grid(row=1, column=1, sticky="w", padx=5, pady=5)
-        
-        # Update current quantity when product selection changes
-        def update_current_quantity(event):
-            selected_product = self.remove_stock_product_var.get()
-            if selected_product:
-                product_id = selected_product.split(" - ")[0]
-                self.current_quantity_var.set(self.products[product_id]["quantity"])
-        
-        product_dropdown.bind("<<ComboboxSelected>>", update_current_quantity)
-        
-        # Quantity to remove
-        quantity_label = tk.Label(
-            form_frame,
-            text="Quantity to Remove:",
-            font=("Helvetica", 10),
-            bg=self.bg_color
-        )
-        quantity_label.grid(row=2, column=0, sticky="e", padx=5, pady=5)
-        
-        self.remove_stock_quantity_var = tk.StringVar()
-        
-        quantity_entry = tk.Entry(
-            form_frame,
-            textvariable=self.remove_stock_quantity_var,
-            font=("Helvetica", 10),
-            width=30
-        )
-        quantity_entry.grid(row=2, column=1, sticky="w", padx=5, pady=5)
-        
-        # Notes
-        notes_label = tk.Label(
-            form_frame,
-            text="Notes:",
-            font=("Helvetica", 10),
-            bg=self.bg_color
-        )
-        notes_label.grid(row=3, column=0, sticky="ne", padx=5, pady=5)
-        
-        self.remove_stock_notes_var = tk.StringVar()
-        
-        notes_entry = tk.Entry(
-            form_frame,
-            textvariable=self.remove_stock_notes_var,
-            font=("Helvetica", 10),
-            width=30
-        )
-        notes_entry.grid(row=3, column=1, sticky="w", padx=5, pady=5)
-        
-        # Button frame
-        button_frame = tk.Frame(form_frame, bg=self.bg_color)
-        button_frame.grid(row=4, column=0, columnspan=2, pady=(20, 0))
-        
-        remove_button = tk.Button(
-            button_frame,
-            text="Remove Stock",
-            font=("Helvetica", 10),
-            bg=self.accent_color,
-            fg="white",
-            command=lambda: self.remove_stock(dialog)
-        )
-        remove_button.pack(side="left", padx=10)
-        
-        cancel_button = tk.Button(
-            button_frame,
-            text="Cancel",
-            font=("Helvetica", 10),
-            bg=self.accent_color,
-            fg="white",
-            command=dialog.destroy
-        )
-        cancel_button.pack(side="left", padx=10)
-        
-    def remove_stock(self, dialog):
-        """Remove stock from selected product"""
         try:
-            product_str = self.remove_stock_product_var.get()
-            product_id = product_str.split(" - ")[0]
-            quantity_str = self.remove_stock_quantity_var.get().strip()
-            notes = self.remove_stock_notes_var.get().strip()
-            
-            if not product_id or not quantity_str:
-                messagebox.showerror("Error", "Please select a product and enter quantity")
-                return
-                
-            try:
-                quantity = int(quantity_str)
-                if quantity <= 0:
-                    raise ValueError
-            except ValueError:
-                messagebox.showerror("Error", "Please enter a valid positive quantity")
-                return
-                
-            product = self.products[product_id]
-            
-            if quantity > product["quantity"]:
-                messagebox.showerror("Error", f"Not enough stock available. Current stock: {product['quantity']}")
-                return
-                
-            product["quantity"] -= quantity
-            product["modified_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            
-            # Record transaction
-            self.record_transaction(
-                product_id,
-                "remove",
-                quantity,
-                f"Stock removed: {notes}" if notes else "Stock removed"
-            )
-            
-            # Save data
-            self.save_data(self.products_file, self.products)
-            
-            # Refresh products list if Products tab is active
-            self.refresh_products_list()
-            
-            # Update low stock report if Inventory tab is active
-            self.generate_low_stock_report()
-            
-            # Close dialog
-            dialog.destroy()
-            
-            messagebox.showinfo("Success", f"{quantity} units removed from {product['name']}")
-            
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to remove stock: {str(e)}")
+            quantity = int(quantity_str)
+            if quantity <= 0:
+                raise ValueError
+        except ValueError:
+            messagebox.showerror("Error", "Please enter a valid positive quantity")
+            return
+        
+        product = self.products[product_id]
+        product["quantity"] += quantity
+        product["modified_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        # Record transaction
+        self.record_transaction(
+            product_id,
+            "add",
+            quantity,
+            f"Stock added: {notes}" if notes else "Stock added"
+        )
+        
+        # Save data
+        self.save_data(self.products_file, self.products)
+        
+        # Refresh products list if Products tab is active
+        self.refresh_products_list()
+        
+        # Update low stock report if Inventory tab is active
+        self.generate_low_stock_report()
+        
+        # Close dialog
+        dialog.destroy()
+        
+        messagebox.showinfo("Success", f"{quantity} units added to {product['name']}")
+        
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to add stock: {str(e)}")
+
+
+def remove_stock_dialog(self):
+    """Show dialog for removing stock from a product"""
+    dialog = tk.Toplevel(self.root)
+    dialog.title("Remove Stock")
+    dialog.geometry("400x250")
+    dialog.resizable(False, False)
+    dialog.transient(self.root)
+    dialog.grab_set()
+    
+    # Form frame
+    form_frame = tk.Frame(dialog, bg=self.bg_color)
+    form_frame.pack(fill="both", expand=True, padx=20, pady=20)
+    
+    # Product selection
+    product_label = tk.Label(
+        form_frame,
+        text="Select Product:",
+        font=("Helvetica", 10),
+        bg=self.bg_color
+    )
+    product_label.grid(row=0, column=0, sticky="e", padx=5, pady=5)
+    
+    self.remove_stock_product_var = tk.StringVar()
+    
+    product_names = sorted([(product_id, f"{product_id} - {product['name']}") 
+                          for product_id, product in self.products.items()], 
+                          key=lambda x: x[1])
+    
+    product_dropdown = ttk.Combobox(
+        form_frame,
+        textvariable=self.remove_stock_product_var,
+        font=("Helvetica", 10),
+        values=[name[1] for name in product_names],
+        state="readonly",
+        width=30
+    )
+    product_dropdown.grid(row=0, column=1, sticky="w", padx=5, pady=5)
+    product_dropdown.current(0)
+    
+    # Current quantity display (readonly)
+    current_label = tk.Label(
+        form_frame,
+        text="Current Quantity:",
+        font=("Helvetica", 10),
+        bg=self.bg_color
+    )
+    current_label.grid(row=1, column=0, sticky="e", padx=5, pady=5)
+    
+    self.current_quantity_var = tk.StringVar()
+    self.current_quantity_var.set(self.products[product_names[0][0]]["quantity"])
+    
+    current_entry = tk.Entry(
+        form_frame,
+        textvariable=self.current_quantity_var,
+        font=("Helvetica", 10),
+        state="readonly",
+        width=30
+    )
+    current_entry.grid(row=1, column=1, sticky="w", padx=5, pady=5)
+    
+    # Update current quantity when product selection changes
+    def update_current_quantity(event):
+        selected_product = self.remove_stock_product_var.get()
+        if selected_product:
+            product_id = selected_product.split(" - ")[0]
+            self.current_quantity_var.set(self.products[product_id]["quantity"])
+    
+    product_dropdown.bind("<<ComboboxSelected>>", update_current_quantity)
+    
+    # Quantity to remove
+    quantity_label = tk.Label(
+        form_frame,
+        text="Quantity to Remove:",
+        font=("Helvetica", 10),
+        bg=self.bg_color
+    )
+    quantity_label.grid(row=2, column=0, sticky="e", padx=5, pady=5)
+    
+    self.remove_stock_quantity_var = tk.StringVar()
+    
+    quantity_entry = tk.Entry(
+        form_frame,
+        textvariable=self.remove_stock_quantity_var,
+        font=("Helvetica", 10),
+        width=30
+    )
+    quantity_entry.grid(row=2, column=1, sticky="w", padx=5, pady=5)
+    
+    # Notes
+    notes_label = tk.Label(
+        form_frame,
+        text="Notes:",
+        font=("Helvetica", 10),
+        bg=self.bg_color
+    )
+    notes_label.grid(row=3, column=0, sticky="ne", padx=5, pady=5)
+    
+    self.remove_stock_notes_var = tk.StringVar()
+    
+    notes_entry = tk.Entry(
+        form_frame,
+        textvariable=self.remove_stock_notes_var,
+        font=("Helvetica", 10),
+        width=30
+    )
+    notes_entry.grid(row=3, column=1, sticky="w", padx=5, pady=5)
+    
+    # Button frame
+    button_frame = tk.Frame(form_frame, bg=self.bg_color)
+    button_frame.grid(row=4, column=0, columnspan=2, pady=(20, 0))
+    
+    remove_button = tk.Button(
+        button_frame,
+        text="Remove Stock",
+        font=("Helvetica", 10),
+        bg=self.accent_color,
+        fg="white",
+        command=lambda: self.remove_stock(dialog)
+    )
+    remove_button.pack(side="left", padx=10)
+    
+    cancel_button = tk.Button(
+        button_frame,
+        text="Cancel",
+        font=("Helvetica", 10),
+        bg=self.accent_color,
+        fg="white",
+        command=dialog.destroy
+    )
+    cancel_button.pack(side="left", padx=10)
+
+
+def remove_stock(self, dialog):
+    try:
+        product_id = self.remove_stock_product_var.get().split(" - ")[0]
+        quantity_to_remove = int(self.remove_stock_quantity_var.get())
+        notes = self.remove_stock_notes_var.get()
+        
+        # Check if the quantity to remove is valid
+        if quantity_to_remove <= 0:
+            raise ValueError("Invalid quantity to remove")
+        
+        # Check if the product has sufficient quantity
+        if self.products[product_id]["quantity"] < quantity_to_remove:
+            raise ValueError("Insufficient quantity in stock")
+        
+        # Remove stock from the product
+        self.products[product_id]["quantity"] -= quantity_to_remove
+        
+        # Update the current quantity display
+        self.current_quantity_var.set(self.products[product_id]["quantity"])
+        
+        # Record transaction
+        self.record_transaction(
+            product_id,
+            "remove",
+            quantity_to_remove,
+            f"Stock removed: {notes}" if notes else "Stock removed"
+        )
+        
+        # Save data
+        self.save_data(self.products_file, self.products)
+        
+        # Refresh products list if Products tab is active
+        self.refresh_products_list()
+        
+        # Update low stock report if Inventory tab is active
+        self.generate_low_stock_report()
+        
+        # Close dialog
+        dialog.destroy()
+        
+        product = self.products[product_id]
+        messagebox.showinfo("Success", f"{quantity_to_remove} units removed from {product['name']}")
+        
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to remove stock: {str(e)}")
 
     def show_reports_tab(self):
         """Display reports tab"""
@@ -2064,7 +2057,7 @@ if __name__ == "__main__":
     # Bind keyboard shortcuts
     root.bind("<F1>", lambda event: app.show_help())
     root.bind("<Control-q>", lambda event: app.on_closing())
-    
+
     # Handle window closing
     root.protocol("WM_DELETE_WINDOW", app.on_closing)
     root.mainloop()
