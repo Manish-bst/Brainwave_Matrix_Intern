@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Premium Laptop",
+    "category": "Electronics",
+    "price": 999.99,
+    "quantity": 15,
+    "min_stock": 10,
+    "description": "High-end business laptop",
+    "last_updated": "2023-01-01 10:00:00"
+  },
+  {
+    "id": 2,
+    "name": "Wireless Mouse",
+    "category": "Accessories",
+    "price": 25.5,
+    "quantity": 42,
+    "min_stock": 20,
+    "description": "Ergonomic wireless mouse",
+    "last_updated": "2023-01-05 14:30:00"
+  },
+  {
+    "id": 3,
+    "name": "Monitor Stand",
+    "category": "Furniture",
+    "price": 45.75,
+    "quantity": 8,
+    "min_stock": 15,
+    "description": "Adjustable monitor stand",
+    "last_updated": "2023-01-10 09:15:00"
+  }
+]
