@@ -4,10 +4,10 @@
     "name": "Premium Laptop",
     "category": "Electronics",
     "price": 999.99,
-    "quantity": 15,
+    "quantity": 6,
     "min_stock": 10,
     "description": "High-end business laptop",
-    "last_updated": "2023-01-01 10:00:00"
+    "last_updated": "2025-07-11 12:52:07"
   },
   {
     "id": 2,
@@ -24,9 +24,39 @@
     "name": "Monitor Stand",
     "category": "Furniture",
     "price": 45.75,
-    "quantity": 8,
+    "quantity": 14,
     "min_stock": 15,
     "description": "Adjustable monitor stand",
-    "last_updated": "2023-01-10 09:15:00"
+    "last_updated": "2025-07-11 12:53:17"
+  },
+  {
+    "id": 4,
+    "name": "keyboard",
+    "category": "Accessories",
+    "price": 25.0,
+    "quantity": 40,
+    "min_stock": 3,
+    "description": "It is use to type in system",
+    "last_updated": "2025-07-11 12:51:39"
+  },
+  {
+    "id": 5,
+    "name": "painting",
+    "category": "Decor",
+    "price": 90.0,
+    "quantity": 13,
+    "min_stock": 10,
+    "description": "Used to decorate the homes.",
+    "last_updated": "2025-07-12 14:31:09"
+  },
+  {
+    "id": 6,
+    "name": "table",
+    "category": "Furniture",
+    "price": 18.0,
+    "quantity": 30,
+    "min_stock": 8,
+    "description": "it is used to keep things",
+    "last_updated": "2025-07-12 14:30:26"
   }
 ]
