@@ -1,1 +1,131 @@
-[]
+[
+  {
+    "timestamp": "2025-07-11 12:51:21",
+    "user": "admin",
+    "action": "ADD",
+    "product_id": 4,
+    "product_name": "keyboard",
+    "details": {
+      "new": {
+        "id": 4,
+        "name": "keyboard",
+        "category": "Accessory",
+        "price": 25.0,
+        "quantity": 40,
+        "min_stock": 3,
+        "description": "It is use to type in system",
+        "last_updated": "2025-07-11 12:51:21"
+      },
+      "old": null
+    }
+  },
+  {
+    "timestamp": "2025-07-11 12:51:39",
+    "user": "admin",
+    "action": "UPDATE",
+    "product_id": 4,
+    "product_name": "keyboard",
+    "details": {
+      "new": {
+        "id": 4,
+        "name": "keyboard",
+        "category": "Accessories",
+        "price": 25.0,
+        "quantity": 40,
+        "min_stock": 3,
+        "description": "It is use to type in system",
+        "last_updated": "2025-07-11 12:51:39"
+      },
+      "old": {
+        "id": 4,
+        "name": "keyboard",
+        "category": "Accessory",
+        "price": 25.0,
+        "quantity": 40,
+        "min_stock": 3,
+        "description": "It is use to type in system",
+        "last_updated": "2025-07-11 12:51:21"
+      }
+    }
+  },
+  {
+    "timestamp": "2025-07-11 12:57:11",
+    "user": "admin",
+    "action": "ADD",
+    "product_id": 5,
+    "product_name": "painting",
+    "details": {
+      "new": {
+        "id": 5,
+        "name": "painting",
+        "category": "Decor",
+        "price": 90.0,
+        "quantity": 40,
+        "min_stock": 10,
+        "description": "Used to decorate the homes.",
+        "last_updated": "2025-07-11 12:57:11"
+      },
+      "old": null
+    }
+  },
+  {
+    "timestamp": "2025-07-11 14:43:17",
+    "user": "admin",
+    "action": "ADD",
+    "product_id": 6,
+    "product_name": "picture",
+    "details": {
+      "new": {
+        "id": 6,
+        "name": "picture",
+        "category": "decor",
+        "price": 90.0,
+        "quantity": 20,
+        "min_stock": 3,
+        "description": "Used to decorate home",
+        "last_updated": "2025-07-11 14:43:17"
+      },
+      "old": null
+    }
+  },
+  {
+    "timestamp": "2025-07-11 14:43:40",
+    "user": "admin",
+    "action": "DELETE",
+    "product_id": 6,
+    "product_name": "picture",
+    "details": {
+      "new": {
+        "id": 6,
+        "name": "picture",
+        "category": "decor",
+        "price": 90.0,
+        "quantity": 20,
+        "min_stock": 3,
+        "description": "Used to decorate home",
+        "last_updated": "2025-07-11 14:43:17"
+      },
+      "old": null
+    }
+  },
+  {
+    "timestamp": "2025-07-12 14:30:26",
+    "user": "admin",
+    "action": "ADD",
+    "product_id": 6,
+    "product_name": "table",
+    "details": {
+      "new": {
+        "id": 6,
+        "name": "table",
+        "category": "Furniture",
+        "price": 18.0,
+        "quantity": 30,
+        "min_stock": 8,
+        "description": "it is used to keep things",
+        "last_updated": "2025-07-12 14:30:26"
+      },
+      "old": null
+    }
+  }
+]
